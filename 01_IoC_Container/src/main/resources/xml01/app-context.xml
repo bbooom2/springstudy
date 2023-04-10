@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--  
+		안녕. 난 Spring Bean Configuration File이야.
+		난 IoC Container(스프링 컨테이너)에 Bean을 만들어 두는 파일이지. 
+		내가 <bean> 태그를 사용하면 Bean이 만들어져서 보관 돼.
+	-->
+	
+	<!--  xml임에도 불구하고 자동완성이 가능하다. bean 태그가 만들어지면 spring이 new Calculator 해서 보관하고 있는 것. -->
+	<!--  calculator 객체 생성  -->
+	<bean id="calc" class="com.gdu.app01.xml01.Calculator" />
+	
+	<!-- 
+		Calculator calc = new Calculator();
+		Student student = new Student();
+		student.setCalculator(calc);
+		student.setStuNo("10101");
+		studetn.setName("강나래");
+		
+		객체 이름이 아이디임. 
+	 -->
+	 <!--  
+	 	default constructor + setter 
+	 	<property name="stuNo"> 태그는 setStuNo() 메소드를 이용한다. 
+	 	<property name="name"> 태그는 setName() 메소드를 이용한다. 
+	 	<property name="calculator"> 태그는 setCalculator() 메소드를 이용한다. 
+	 -->
+	 
+	 <!--  student 객체 생성  -->
+	 <bean id="student" class="com.gdu.app01.xml01.Student">
+	 <!-- 1대1 대응 시켜주는 태그가 property -->
+	 <!-- ref = reference -->
+	 	<property name="stuNo" value="10101" />
+	 	<property name="name" value="강나래" />
+	 	<property name="calculator" ref="calc" /> <!-- student에 생성한 계산기 객체 넣어주는 것 -->
+	 </bean>
+
+</beans>
