@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="myConn" class="com.gdu.app01.xml04.MyConnection">
+	<!--field 이름과 name은 같아야 함  -->
+		<property name="driver" value="oracle.jdbc.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="user" value="GDJ61"/>
+		<property name="password" value="1111"/>
+	</bean>
+
+	<!-- Bean 속성중 scope 있음 안 적어도 되는데 이번엔 한번 적어볼것 속성 중 싱글턴 있음 싱글턴으로 빈을 만들어주겠다 싱글턴 패턴으로 빈을 만들어 주겠다 MyDAO에 만들어둔 싱글턴패턴을 대체할수있음. 이거 작성하면 만들어뒀던 코드는 지워도 됨.  -->
+	<!-- 
+	
+	
+	<bean> 태그의 scope 속성 
+	1. scope="singleton"
+		1) Spring Container에 bean을 하나만 만든다.
+		2) 디폴트 속성이다. 
+		
+	2. scope="prototype"
+		1) Spring Container에 bean을 여러 개 만든다. 
+		2) getBean() 메소드로 bean을 요청할 때마다 새로운 bean을 계속 만든다. 
+	
+	 -->
+	<bean id="dao" class="com.gdu.app01.xml04.MyDAO" scope="singleton"/>
+</beans>
