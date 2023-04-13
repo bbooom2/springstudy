@@ -15,11 +15,11 @@ import com.gdu.app02.domain.Person;
 public class MvcController {
 
 	/*
-	@RequestMapping을 대체하는 새로운 애너테이션(String4)
-	1. @GetMapping : GET 방식일 때 쓴다.
-	2. @PostMapping  : POST 방식일 때 쓴다. 
-	3. @PutMapping : PUT 방식일 때 쓴다. (수정할 때) 
-	4. @DeleteMapping : DELETE 방식일 때 쓴다. (삭제할 때)
+		@RequestMapping을 대체하는 새로운 애너테이션(String4)
+		1. @GetMapping    : GET 방식일 때 쓴다.
+		2. @PostMapping   : POST 방식일 때 쓴다. 
+		3. @PutMapping    : PUT 방식일 때 쓴다. (수정할 때) 
+		4. @DeleteMapping : DELETE 방식일 때 쓴다. (삭제할 때)
 	*/
 	
 	/*
