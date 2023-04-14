@@ -25,23 +25,46 @@
 			error: function(jqXHR){
 				$('#bmi').text('');
 				$('#obesity').text('');
-				alert(jqXHR.responseText);
+				//alert(jqXHR.responseText + '(' + jqXHR.status + ')');
+				if(jqXHR.status == 500) {
+					alert('몸무게와 키 입력을 확인하세요.');
+				}
 			}
 		})
 	}
 	
-	function fnBmi2(){
-		// 요청 
-		type: 'get', 
-		url: '${contextPath}/second/bmi2',
-		data: $('#frm').serialize(),
-		
-		// 응답 
-		dataType: 'json',
-		
-		
-	}
-
+	 function fnBmi2(){
+		 let weight = $('#weight').val();
+		 if(weight < 0 || isNaN(weight) < 0 || isNaN(weight)) {
+			 alert('몸무게를 확인하세요.');
+			 return;
+		 }
+		 let height = $('#heigth').val();
+		 if(height ==  '' || isNaN(height) < 0 || isNaN(height)) {
+			 alert('키를 확인하세요.');
+			 return;
+		 }
+	      $.ajax({
+	            // 요청 
+	            type: 'get', // 단순히 값을 가져오기 때문에 get 방식
+	            url: '${contextPath}/second/bmi2',
+	            data: $('#frm').serialize(),
+	            // 응답 
+	            dataType: 'json',
+	            success: function(resData){               // resData : {"bmi": 22, "obesity": "정상", "weight" : 1, "height" : 1}
+	               $('#bmi').text(resData['bmi']);            // resData.bmi       == resData['bmi']
+	              $('#obesity').text(resData['obesity']);      // resData.obesity    == resData['obesity']
+	            },
+	            error: function(jqXHR){
+	               $('#bmi').text('');
+	               $('#obesity').text('');
+	               //alert(jqXHR.responseText);
+	               if(jqXHR.status == 400) { // 400은 BAD REQUEST를 의미한다. 
+	            	   alert('몸무게와 키는 0일 수 없습니다.');
+	               }
+	            }
+	         })
+	   }
 </script>
 </head>
 <body>

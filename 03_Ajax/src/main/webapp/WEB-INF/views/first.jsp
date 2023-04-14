@@ -10,7 +10,7 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 	function fn1() {
-		$('#result').empty();
+		$('#result').empty(); // 시작하기 전 지우기 
 		
 		$.ajax({
 			//요청
@@ -24,7 +24,7 @@
 				str += '<li>' + resData.name + '</li>';
 				str += '<li>' + resData.age + '</li>';
 				str += '</ul>';
-				$('#result').append(str);
+				$('#result').append(str); // 추가하기 
 			},
 			error: function(jqXHR){
 	            $('#result').text(jqXHR.responseText);

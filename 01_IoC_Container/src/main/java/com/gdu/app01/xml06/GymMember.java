@@ -10,7 +10,7 @@ public class GymMember {
 	private List<String> cources;
 	private BmiCalculator bmiCalc;
 	
-	// contsructor
+	// constructor
 	public GymMember(String name, List<String> cources, BmiCalculator bmiCalc) {
 		super();
 		this.name = name;
@@ -22,7 +22,7 @@ public class GymMember {
 	public void memberInfo() {
 		System.out.println("이름: " + name);
 		
-		// 리스트니까 포문 쓰겠음 
+		// List이므로 for문 사용 
 		for(int i = 0; i < cources.size(); i++) {
 			System.out.println((i+1) + "번째 종목:" + cources.get(i));
 		}
