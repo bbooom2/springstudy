@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender"> <!--콘솔에 로그를 찍어주고 하단에 찍히는 방법 알려주고 있음  -->
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %c - %m%n" /> <!-- -5가 줄맞춤과 관련됨 다섯자리로 로그레벨을 적어주겠다. %c - 클래스   %m" - 로그메시지(남길메시지) %n : 줄바꿈-->
+		</layout>
+	</appender>
+	
+	<!-- Application Loggers --> <!-- 애플리케이션의 기본 로그 레벨 -->
+	<logger name="com.gdu.app04">
+		<level value="info" />
+	</logger>
+	
+	<!-- 3rdparty Loggers --> <!-- fatal, error, warn, info(production : 완성품을 위한 기본값정도?), debug(development), trace -->
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.beans">
+		<level value="info" />
+	</logger>
+	
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>
+
+	<!-- Root Logger -->
+	<root>
+		<priority value="warn" />
+		<appender-ref ref="console" />
+	</root>
+	
+</log4j:configuration>

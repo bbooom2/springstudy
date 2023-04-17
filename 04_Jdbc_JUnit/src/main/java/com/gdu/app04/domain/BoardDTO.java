@@ -1,0 +1,20 @@
+package com.gdu.app04.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BoardDTO { // BoardController 다음에 이거 만들어줬음
+	
+	private int board_no;
+	private String title;
+	private String content;
+	private String writer;
+	private String created_at;
+	private String modified_at;
+	
+
+}
