@@ -1,0 +1,65 @@
+package com.gdu.app05.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gdu.app05.domain.BoardDTO;
+import com.gdu.app05.repository.BoardDAO;
+
+// BoardServiceImpl 클래스 타입의 객체를 만들어서 Spring Container에 저장하시오. 
+
+/*
+@Component
+1. BoardServiceImpl 클래스 타입의 객체를 만ㄷ르어서 Spring Container에 저장한다. 
+2.<bean> 태그나 @Configuration + @Bean 애너테이션을 대체하는 방식이다.
+3. Layer별 전용 @Component가 만들어져 있다.
+	1) 컨트롤러		   : @Controller
+	2) 서비스		   : @Service
+	3) 레파지토리(DAO) : @Repository
+	
+*/
+
+/*
+	단, @Component가 @Autowired를 통해서 인식되려면 Component-Scan이 등록되어 있어야 한다.
+ 	Component-Scan 등록 방법 
+ 	방법1. <context:component-scan> - servlet-context.xml에 이미 등록되어 있다.
+ 	방법2. @ComponentScan - 방법 1이 되어있으므로 방법2는 굳이 할 필요 없다. 
+ 	
+*/
+//@Repository 대신 AppConfig에 @Bean이 등록되어 있다. 
+// @Component 이렇게 되어있으면 스프링 컨테이너에 만들어진 bean이다. 근데 이걸로는 다충족이 안되므로 @Service 활용 
+public class BoardServiceImpl implements BoardService {
+	
+	@Autowired
+	private BoardDAO boardDAO;
+	
+	@Override
+	public List<BoardDTO> getBoardList() {
+		
+		return boardDAO.selectBoardList();
+	}
+
+	   @Override
+	   public BoardDTO getBoardByNo(int board_no) {
+	      return boardDAO.selectBoardByNo(board_no);
+	   }
+
+	@Override
+	public int addBoard(BoardDTO board) { // 서비스는 받아서 다오로 전달 
+		return boardDAO.insertBoard(board);
+	}
+
+	@Override
+	public int modifyBoard(BoardDTO board) {
+		
+		return boardDAO.updateBoard(board);
+	}
+
+	@Override
+	public int removeBoard(int board_no) { //번호 전달됨 매개변수에 인트넘버가 있음 
+		return boardDAO.deleteBoard(board_no); 
+	}
+
+}

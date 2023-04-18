@@ -42,28 +42,25 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.selectBoardList();
 	}
 
-	@Override
-	public BoardDTO getBoardByNo(int board_no) {
-	
-		return null;
-	}
+	   @Override
+	   public BoardDTO getBoardByNo(int board_no) {
+	      return boardDAO.selectBoardByNo(board_no);
+	   }
 
 	@Override
-	public int addBoard(BoardDTO board) {
-		
-		return 0;
+	public int addBoard(BoardDTO board) { // 서비스는 받아서 다오로 전달 
+		return boardDAO.insertBoard(board);
 	}
 
 	@Override
 	public int modifyBoard(BoardDTO board) {
 		
-		return 0;
+		return boardDAO.updateBoard(board);
 	}
 
 	@Override
-	public int removeBoard(int board_no) {
-	
-		return 0;
+	public int removeBoard(int board_no) { //번호 전달됨 매개변수에 인트넘버가 있음 
+		return boardDAO.deleteBoard(board_no); 
 	}
 
 }

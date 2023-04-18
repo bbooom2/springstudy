@@ -78,7 +78,7 @@ public class BoardDAO {
 		
 		try { 
 			con = getConnection();
-			sql = "SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT FROM BOARD WHERE BOARD_NO = ?"; // 변수값은 꼭 물음표로 넣기
+			sql = "SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT FROM BOARD WHERE BOARD_NO = ?"; // 변수값은 꼭 물음표로 넣기  // 다오는 받아서 물음표 값에 
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, board_no);
 			rs = ps.executeQuery(); 
