@@ -29,7 +29,7 @@ private BoardService boardService; // 3장부터 연습했던 에이작에서 �
 										//이거 확인할때도 톰캣활용하여 서버로 돌리면 됨. 게시판 클릭시 [BoardDTO(board_no=1, title=제목, content=내용, wirter=작성자, created_at=작성일, modified_at=수정일)] 콘솔창에 나타남
 										//System.out.println(boardService.getBoardList());
 		List<BoardDTO> list = boardService.getBoardList();
-		LOGGER.debug(null)
+		LOGGER.debug(null);
 		model.addAttribute("boardList", boardService.getBoardList()); // db에 있는 목록이 나옴. 보드 리스트라는 이름으로 전달 
 		return "board/list"; // list는 jsp 이름 그러니 이제 만들러 가면 됨. 
 	}
@@ -51,6 +51,7 @@ private BoardService boardService; // 3장부터 연습했던 에이작에서 �
 	public String detail(@RequestParam(value="board_no", required = false, defaultValue="0") int board_no // 목록보기 상세보기는 model 필요 모델이 있어야 상세보기 jsp로 상세보기 내용을 전달함 
 						,Model model) { 
 		LOGGER.debug(board_no + ""); //파라미터 확인 
+		BoardDTO b = boardService.getBoardByNo(board_no);
 		model.addAttribute("b", boardService.getBoardByNo(board_no));
 		LOGGER.debug(b.toString()); // 상세 결과 확인
 		model.addAttribute("b", b);
@@ -64,7 +65,8 @@ private BoardService boardService; // 3장부터 연습했던 에이작에서 �
 	}
 	@PostMapping("/modify.do")
 	public String modify(BoardDTO board) {
-		boardService.modifyBoard(board);
+		LOGGER.debug(board.toString());  // 파라미터 확인
+		LOGGER.debug(boardService.modifyBoard(board) + "");  // 결과 확인
 		return "redirect:/board/detail.do?board_no=" +board.getBoard_no();
 	}
 	
