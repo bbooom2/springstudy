@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- 웹애플리케이션에 대한 모든 설정 정보를 담고 있음. -->
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<!-- UTF-8 Encoding -->
+	<filter>
+		<filter-name>encodingFilter</filter-name> <!-- 필터명 설정. 디폴트값이 인코딩필터. 따로 건드리지 않은 것 뿐. 인코딩 처리를 위한 클래스임.-->
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param> <!-- private 지역변수와 같음. 외부에서는 사용 불가. 여기서만 쓸 수 있는 이닛파람 -->
+			<param-name>encoding</param-name> <!-- 인코딩 방식을 값으로 넣어야 하므로 UTF-8 설정 -->
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name> <!-- boolean 타입 트루아니면 false 밖에 못들어감. 인코딩을 강제로 처리하겠다. 모든 요청과 응답에 대해 utf-8로 처리하겠다. -->
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name> <!-- 선언한 필터를 매핑하는 것. 필터명과 동일해야함. 그래서 인코딩필터로 통일된것.  -->
+		<url-pattern>/*</url-pattern> <!-- 슬래시로 시작하는 모든 요청과 응답이 유티에프팔로 처리하겠다는 것.  -->
+	</filter-mapping>
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name> <!-- 경로지정 파라미터 -->
+		<param-value>/WEB-INF/spring/root-context.xml</param-value> <!-- 우리가 가지고 잇는 루트컨텍스트의 경로. 이 경로를 지정하지 않으면 루트컨텍스트 파일이 될 수 없음. 이 파일명은 우리가 임의로 설정할수있으나 알아보기 쉽게 되어있으므로 따로 건들지 않음. 컨텍스트 파라미터에서 루트컨텍스트 경로를 지정해줘야 루트컨텍스트가 되는 것이다. -->
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener> <!-- 스프링클래스 일종. 우리가 경로 지정해준 것들을 자동으로 매핑해서 루트컨텍스트를 불러올 수 있는것.  -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name> <!-- 임의 지정 가능 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> <!-- 디스패처는 빠르고 효율 좋음 버퍼드처럼. 그냥 서블릿일 뿐인데 좀 더 빠른 서블릿. -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name> <!-- 임의 지정 가능  -->
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> 
+		</init-param>
+		<load-on-startup>1</load-on-startup> <!-- 프로젝트 구동할때 쓰는 게 톰캣. 톰캣컨테이너의 우선순위를 1순위로 설정하겠다는 것. 왜 설정하냐면 컨테이너가 실행되면서 서블릿이 초기화 됨. 새로고침을 했을 때  -->
+	</servlet>
+		
+	<servlet-mapping> <!-- /로함으로써 디폴트로 디스패쳐서블릿을 불러온다. -->
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>

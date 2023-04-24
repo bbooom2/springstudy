@@ -20,7 +20,7 @@ public class BoardDAO { // 코드가지고 있는 걸로 만족. 6장은 aop를 
    private String sql;
    
    // 1. 목록 
-   public List<BoardDTO> selectBoardList(){
+   public List<BoardDTO> selectBoardList(){ //어레이리스트라고는 하지만 개별요소는 DTO
 	  sql = "SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT FROM BOARD ORDER BY BOARD_NO DESC";         
       List<BoardDTO> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BoardDTO.class)); // RowMapper 행단위로 커넥션 처리하던게 rs, // 행단위로 가지온 rs값을 보드디티오 빈단위로 만드는 것을 빈프로퍼티로우매퍼라 한다. 
       return list;

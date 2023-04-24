@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gdu.app03.domain.Person;
-import com.gdu.app03.service.FirstServiceImpl;
 import com.gdu.app03.service.IFirstService;
 
 @Controller

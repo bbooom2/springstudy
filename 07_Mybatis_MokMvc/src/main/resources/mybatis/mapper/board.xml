@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- 테이블 이름으로 mapper이름 명명  -->
+ 
+<!-- namespace는 mybatis.mapper.board.xml 파일을 의미한다. -->
+<mapper namespace="mybatis.mapper.board">  
+
+	<!-- 
+	
+	parameterType : DAO에서 mapper로 받아오는 값의 타입 
+	resultType 	  : mapper에서 DAO로 반환하는 값의 타입(insert, update, delete는 사용하지 못한다.)
+	
+  	-->
+  	<select id="selectBoardList" resultType="Board">  <!-- 여기서 오류나면 500번 오류. ArrayList가 아니라 ArrayList에 저장된 개별 요소들의 타입을 기재하는 것. 원래는 com.gdu.app07.domain.BoardDTO인데 우리는 마이바티스 컨피그에 Board라고 명명하기로 하였으므로 기재내용은 Board -->
+  		SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT 
+  		  FROM BOARD 
+  	  ORDER BY BOARD_NO DESC
+  	</select>
+  	
+  	<select id="selectBoardByNo" parameterType="int" resultType="Board">
+  	SELECT BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT 
+  	  FROM BOARD 
+  	 WHERE BOARD_NO = #{boardNo} <!-- 상황에 따라 #{}, ${}을 사용함, 중괄호 안에 변수 이름,  ${}는 추후 강의 예정 -->
+  	</select>
+  	
+  	<insert id="insertBoard"  parameterType="Board"> <!-- 삽입하려면 다오로부터 BoardDTO를 받아올 것. 전달이 객체일때 사용되는 변수의 이름은 객체의 필드값이다. -->
+  		INSERT INTO BOARD
+  		    (BOARD_NO, TITLE, CONTENT, WRITER, CREATED_AT, MODIFIED_AT) <!-- 없어도 되는 부분인데 달아두면 있는대로 값이 순서대로 들어갈 수 있게 됨.(권장사항이지 필수는 아님. 필수는 아니지만 그래도 실습할때는 계속 쓰기.식별용으로 좋음.)  -->
+  		VALUES
+  		   (BOARD_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))
+  	</insert>
+  	
+  	<update id="updateBoard" parameterType="Board"> <!-- 업데이트에 관련된 정보들은 전달 받아서 가지고 와야 하는 게 보드넘버, 타이틀, 컨텐트 이 세가지는 보드디티오에 담아서 다오로부터 받아와야 함.(사용자로부터 입력 받은 거 타이틀, 컨텐트 그리고 작성된 번호를 가져와야 업데이트가 되니까.  -->
+  	 UPDATE BOARD 
+  	    SET TITLE = #{title}
+  	    , CONTENT = #{content}
+  	    , MODIFIED_AT = TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') 
+  	  WHERE BOARD_NO = #{boardNo}
+  	</update>
+  	
+  	<delete id="deleteBoard" parameterType="int" >  <!-- 삭제할때는 딱 하나만 받으면 됨. 번호 받아서 지우는 것. 그래서 파라미트 타입이 인트. 역시  리절트는 안만든다.-->
+  		DELETE 
+  		  FROM BOARD 
+  		 WHERE BOARD_NO = #{boardNo}
+  	</delete>
+
+</mapper>

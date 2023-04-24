@@ -29,7 +29,7 @@ private BoardService boardService; // 3장부터 연습했던 에이작에서 �
 										//이거 확인할때도 톰캣활용하여 서버로 돌리면 됨. 게시판 클릭시 [BoardDTO(board_no=1, title=제목, content=내용, wirter=작성자, created_at=작성일, modified_at=수정일)] 콘솔창에 나타남
 										//System.out.println(boardService.getBoardList());
 		List<BoardDTO> list = boardService.getBoardList();
-		LOGGER.debug(null);
+		LOGGER.debug(list.toString());
 		model.addAttribute("boardList", boardService.getBoardList()); // db에 있는 목록이 나옴. 보드 리스트라는 이름으로 전달 
 		return "board/list"; // list는 jsp 이름 그러니 이제 만들러 가면 됨. 
 	}

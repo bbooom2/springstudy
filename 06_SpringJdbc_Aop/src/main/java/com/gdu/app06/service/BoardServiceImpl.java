@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gdu.app06.domain.BoardDTO;
-import com.gdu.app06.repository.BoardDAO;
 
 // BoardServiceImpl 클래스 타입의 객체를 만들어서 Spring Container에 저장하시오. 
 

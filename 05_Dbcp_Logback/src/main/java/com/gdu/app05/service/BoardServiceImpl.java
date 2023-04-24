@@ -3,7 +3,6 @@ package com.gdu.app05.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.gdu.app05.domain.BoardDTO;
 import com.gdu.app05.repository.BoardDAO;

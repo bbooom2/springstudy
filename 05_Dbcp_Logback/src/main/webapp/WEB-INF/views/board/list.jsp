@@ -41,7 +41,7 @@
 						<td colspan="3">첫 게시글의 주인공이 되어 보세요!</td>
 					</tr>
 				</c:if>
-				<c:if test="${not empth boardList}">
+				<c:if test="${not empty boardList}">
 				<c:forEach items="${boardList}" var="b">
 					<tr onclick="fnDetail(${b.board_no})">
 						<td>${b.title}</td>

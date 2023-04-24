@@ -6,6 +6,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 public class MainClass {
 
 	public static void main(String[] args) {
+
 		
 		// java_into_xml 폴더 app-context.xml
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext("java_into_xml/app-context.xml");
@@ -16,6 +17,8 @@ public class MainClass {
 		System.out.println("제목:" + book.getTitle());
 		System.out.println("출판사: " + book.getPublisher().getName() );
 		System.out.println("출판사 전화:" + book.getPublisher().getTel());
+		
+		ctx.close();
 	}
 
 }

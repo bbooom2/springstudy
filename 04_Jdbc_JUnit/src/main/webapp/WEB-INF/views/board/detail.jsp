@@ -52,15 +52,12 @@
 	
 	<div id="detail_screen">
 		<h1>${b.board_no}번 게시글 상세보기</h1>
-		<div>제목 : ${b.title}</div>
-		<div>작성 : ${b.writer}</div>
-		<div>작성일 : ${b.created_at}</div>
-		<div>수정일 : ${b.modified_at}</div>
-		<div>${b.content}</div>
+		<div>제목 : ${title}</div>
+		<div>${content}</div>
 		<div>
 			<input type="button" value="편집" onclick="fnEdit()">
 			<input type="button" value="삭제" onclick="fnRemove()">
-			<input type="button" value="목록보기" onclick="fnList()">
+			<input type="button" value="목록" onclick="fnList()">
 		</div>
 	</div>
 	

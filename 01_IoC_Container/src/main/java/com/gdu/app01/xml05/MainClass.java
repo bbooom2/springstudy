@@ -18,7 +18,7 @@ public class MainClass {
 		
 		// List<String> hobbies
 		List<String> hobbies = person.getHobbies();
-		for(int i=0; i < person.getHobbies().size(); i++) {
+		for(int i=0; i < hobbies.size(); i++) {
 			System.out.println("취미" + (i + 1) + ": " + person.getHobbies().get(i));
 		}
 	

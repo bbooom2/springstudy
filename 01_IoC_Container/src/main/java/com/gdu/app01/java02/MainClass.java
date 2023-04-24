@@ -1,7 +1,5 @@
 package com.gdu.app01.java02;
 
-import java.util.Arrays;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
