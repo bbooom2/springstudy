@@ -47,12 +47,12 @@
   		 WHERE BOARD_NO = #{boardNo}
   	</delete>
   	
-  	<delete id="deleteBoardList" parameterType="List">
+  	<delete id="deleteBoardList" parameterType="List"> <!-- 어레이리스트에 저장된 1,2,3을 보드넘버 변수로 빼서 안쪽에 ,로 구분해서 적겠다. BOARD_NO IN 붙여서 나오게됨. -->
   		DELETE 
   		  FROM BOARD 
   		<where>
   			<foreach collection="list" item="boardNo" open="BOARD_NO IN(" separator="," close=")">
-  				#{boardNo}
+  				#{boardNo} <!-- 변수처리  -->
   			</foreach>
   		</where>
   	</delete>

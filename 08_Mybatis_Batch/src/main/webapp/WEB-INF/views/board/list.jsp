@@ -94,7 +94,7 @@
 				<thead>
 					<tr> 
 						<td>
-							<label for="chk_all" id="lbl_chk_all">전체선택</label>
+							<label for="chk_all" id="lbl_chk_all">전체선택</label> <!-- 체크 박스 없이 라벨로 남겨두면 전체선택 글씨만 눌러도 전체선태 가능 -->
 							<input type="checkbox" id="chk_all" class="screen_out">
 						</td>
 						<td>제목</td>
