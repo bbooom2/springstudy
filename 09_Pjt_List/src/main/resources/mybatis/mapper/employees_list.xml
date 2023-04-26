@@ -33,8 +33,29 @@
 		  FROM	EMPLOYEES
 	</select>
 	
+	<!-- 
+		#{}와 ${}의 차이 
+		
+		#{} : 변수 값을 작은 따옴표(')로 묶어서 나타낸다.  - 변수 값 (숫자든 문자든 상관없이 사용.)
+		ex : where a.rn between '1' and '10';
+		'1' - > TO_NUMBER('1') - > 1 오라클이 자동으로 변환함 (묵시적 타입 변환)
+		ORDER BY EMPLOYEE_ID ${order} -> ORDER BY EMPLOYEE_ID 'ASC'로 처리 되기 때문에 SQL문법 오류가 발생한다. 
+		
+		${} : 변수 값을 따옴표로 묶지 않고 그대로 나타낸다. - 쿼리문의 키워드나 칼럼 자체를 전달할 때 사용. 
+		ORDER BY EMPLOYEE_ID ${order} -> ORDER BY EMPLOYEE_ID ASC로 처리 되기 때문에 정상 동작한다. 
+	
+	 -->
+	
 	<!-- 디파트먼트 아이디는 양쪽에 있으므로 E.하든 D.하든 상관없음. 다만 셀렉트에 있는 것에는 서브쿼리의 결과인 A.를 붙여야 한다.-->
 	<select id="getEmployeeListUsingPagination" parameterType="Map" resultMap="EmpMap">
+		SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID,0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME 
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${column} ${order}) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+		  		  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+		  		    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
+		 WHERE A.RN BETWEEN #{begin} AND #{end} 
+	</select>
+	
+	<select id="getEmployeeListUsingScroll" parameterType="Map" resultMap="EmpMap">
 		SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID,0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME 
 		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
 		  		  FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E

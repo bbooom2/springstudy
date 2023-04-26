@@ -11,6 +11,7 @@ import com.gdu.app09.domain.EmpDTO;
 public interface EmployeeListMapper {
 	public int getEmployeeCount(); 
 	public List<EmpDTO> getEmployeeListUsingPagination(Map<String, Object> map);
-	//map에는 비긴과 엔드가 들어가야 함. 
+	//map에는 begin과 end가 들어가야 함. 
+	public List<EmpDTO> getEmployeeListUsingScroll(Map<String, Object> map);
 	
 }
