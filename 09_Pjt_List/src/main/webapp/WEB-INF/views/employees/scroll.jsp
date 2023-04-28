@@ -27,7 +27,7 @@
 		$.ajax({
 			// 요청
 			type: 'get',
-			url: '${contextPath}/employee/scroll.do',
+			url: '${contextPath}/employees/scroll.do',
 			data: 'page=' + page, // page=1, page=2, page=3, ...으로 동작 
 			
 			//응답 
@@ -143,7 +143,7 @@
 <body>
 	<!-- 에이작특징 : 만들어서 보여주는 것. -->
 	<div>
-	<a href="${contextPath}/employees/search.form">사원 조회화면으로 이동</a>
+	<a href="${contextPath}/employees/search.do">사원 조회화면으로 이동</a>
 	<!-- 조회 화면으로 이동.  -->	
 	</div>
 		

@@ -46,7 +46,7 @@
 	
 	 -->
 	
-	<!-- 디파트먼트 아이디는 양쪽에 있으므로 E.하든 D.하든 상관없음. 다만 셀렉트에 있는 것에는 서브쿼리의 결과인 A.를 붙여야 한다.-->
+	<!-- 디파트먼트 아이디는 양쪽에 있으므로 E.하든 D.하든 상관없음. 다만 셀렉트에 있는 것에는 서브쿼리의 결과인 A.를 붙여야 한다. 서치에서 오더바이에 E.해준건 붙여도 무방하다고함.-->
 	<select id="getEmployeeListUsingPagination" parameterType="Map" resultMap="EmpMap">
 		SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID,0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME 
 		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY ${column} ${order}) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
@@ -62,4 +62,38 @@
 		  		    ON D.DEPARTMENT_ID = E.DEPARTMENT_ID) A
 		 WHERE A.RN BETWEEN #{begin} AND #{end} 
 	</select>
+	
+	<!-- 인라인뷰. on은 조인조건. 끝나면 일반조건 붙일 수 있음. -->
+	<select id="getEmployeeListUsingSearch" parameterType="Map" resultMap="EmpMap">
+		SELECT A.RN, A.EMPLOYEE_ID, A.FIRST_NAME, A.LAST_NAME, A.EMAIL, A.PHONE_NUMBER, A.HIRE_DATE, A.JOB_ID, A.SALARY, A.COMMISSION_PCT, A.MANAGER_ID, NVL(A.DEPARTMENT_ID, 0) AS DEPARTMENT_ID, NVL(A.DEPARTMENT_NAME, 'None') AS DEPARTMENT_NAME
+		  FROM (SELECT ROW_NUMBER() OVER(ORDER BY E.EMPLOYEE_ID ASC) AS RN, E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.EMAIL, E.PHONE_NUMBER, E.HIRE_DATE, E.JOB_ID, E.SALARY, E.COMMISSION_PCT, E.MANAGER_ID, E.DEPARTMENT_ID, D.DEPARTMENT_NAME
+		          FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+		            ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+		        <where>
+		        	<if test="column != '' and query != ''">
+		        		${column} LIKE '%' || #{query} || '%'
+		        	</if>
+		        </where>) A
+		 WHERE A.RN BETWEEN #{begin} AND #{end}
+	</select>
+	
+	<select id="getEmployeeSearchCount" parameterType="Map" resultType="int">
+		SELECT COUNT(E.EMPLOYEE_ID)
+          FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+            ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+		 <where>
+        	<if test="column != '' and query != ''">  <!-- 칼럼과 검색어가 전달되었을때만 진행. 여기서는 and와 or 사용 가능  -->
+        		${column} LIKE CONCAT('%', CONCAT(#{query},  '%'))
+        	</if>
+        </where>
+	</select>
+
+	<select id="getAutoComplete" parameterType="Map" resultMap="EmpMap">
+	  SELECT DISTINCT ${column}
+        FROM DEPARTMENTS D RIGHT OUTER JOIN EMPLOYEES E
+          ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+       WHERE ${column} LIKE CONCAT(#{query}, '%')
+	</select>
+
+
 </mapper>

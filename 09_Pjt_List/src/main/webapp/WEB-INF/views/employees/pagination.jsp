@@ -30,10 +30,10 @@
 		cursor: pointer;
 	}
 	.title:hover {
-		color : silver;
+		color: gray;
 	}
-	.title {
-	
+	.title:active {
+		color: silver;
 	}
 	.pagination {
 	
@@ -65,7 +65,7 @@
 </head> <!-- 페이지네이션은 목록 하단에 번호 이전 이후 이런거 있는것.  -->
 <body>
 	<div>
-	<a href="${contextPath}/employees/search.form">사원 조회화면으로 이동</a>
+	<a href="${contextPath}/employees/search.do">사원 조회화면으로 이동</a>
 	<!-- 조회 화면으로 이동.  -->	
 	</div>
 	

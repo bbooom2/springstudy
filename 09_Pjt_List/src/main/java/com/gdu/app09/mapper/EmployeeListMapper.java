@@ -13,5 +13,8 @@ public interface EmployeeListMapper {
 	public List<EmpDTO> getEmployeeListUsingPagination(Map<String, Object> map);
 	//map에는 begin과 end가 들어가야 함. 
 	public List<EmpDTO> getEmployeeListUsingScroll(Map<String, Object> map);
+	public List<EmpDTO> getEmployeeListUsingSearch(Map<String, Object> map);
+	public int getEmployeeSearchCount(Map<String, Object> map); 
+	public List<EmpDTO> getAutoComplete(Map<String, Object> map);
 	
 }
