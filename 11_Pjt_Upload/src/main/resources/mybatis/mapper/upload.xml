@@ -8,10 +8,55 @@
 <!-- namespace는 @Mapper를 지정한다. -->
 <mapper namespace="com.gdu.app11.mapper.UploadMapper">  
 
+	<select id ="getUploadList" resultType="UploadDTO">
+		SELECT U.UPLOAD_NO
+		     , U.UPLOAD_TITLE
+		     , U.UPLOAD_CONTENT
+		     , U.CREATED_AT
+		     , U.MODIFIED_AT
+		     , (SELECT COUNT(*)
+		          FROM ATTACH A
+		         WHERE U.UPLOAD_NO = A.UPLOAD_NO) AS ATTACH_COUNT
+		  FROM UPLOAD U
+	</select>
+
+	<insert id="addUpload" parameterType="UploadDTO">
+		<!-- INSERT 수행 이전(before)에 addUpload 서비스가 전달한 UploadDTO의 uploadNo 필드에 UPLOAD_SEQ.NEXTVAL 값을 저장 -->
+		<!-- 인트 타입의 업로드 넘버라고 생각하면 좋음. 셀렉트키가 인서트 밑에 있어도 무관하나 보통 위에 배치함. order 속성의 before 때문에 먼저 실행되는 것.  -->
+		<selectKey order="BEFORE" resultType="int" keyProperty="uploadNo" >
+			SELECT UPLOAD_SEQ.NEXTVAL
+			  FROM DUAL
+		</selectKey>
+		INSERT INTO UPLOAD
+			(UPLOAD_NO, UPLOAD_TITLE, UPLOAD_CONTENT, CREATED_AT, MODIFIED_AT)
+		VALUES
+			(#{uploadNo}, #{uploadTitle}, #{uploadContent}, SYSTIMESTAMP, SYSTIMESTAMP)
+	</insert>
+	
+	<select id="getUploadByNo" parameterType="int" resultType="UploadDTO">
+		SELECT UPLOAD_NO, UPLOAD_TITLE, UPLOAD_CONTENT, CREATED_AT, MODIFIED_AT
+		  FROM UPLOAD
+		 WHERE UPLOAD_NO = #{uploadNo}
+	</select>
+
 	<insert id="addAttach" parameterType="AttachDTO">
 		INSERT INTO ATTACH
 			(ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL)
 		VALUES
-			(ATTACH_SEQ.NEXTVAL, #{path}, #{originName}, #{filesystemName}, 0, #{hasThumbnail})
+			(ATTACH_SEQ.NEXTVAL, #{path}, #{originName}, #{filesystemName}, 0, #{hasThumbnail}, #{uploadNo})
 	</insert>
+	
+	<select id="getAttachList" parameterType="int" resultType="AttachDTO">
+		SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+		  FROM ATTACH
+		 WHERE UPLOAD_NO = #{uploadNo}
+	</select>
+	
+	<select id="getAttachByNo" parameterType="int" resultType="AttachDTO">
+		SELECT ATTACH_NO, PATH, ORIGIN_NAME, FILESYSTEM_NAME, DOWNLOAD_COUNT, HAS_THUMBNAIL, UPLOAD_NO
+		  FROM ATTACH
+		 WHERE ATTACH_NO = #{attachNo}
+	</select>
+	
+
 </mapper>

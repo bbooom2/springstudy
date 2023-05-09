@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gdu</groupId>
 	<artifactId>app11</artifactId>
-	<name>10_Pjt_Upload</name>
+	<name>11_Pjt_Upload</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
  <properties>

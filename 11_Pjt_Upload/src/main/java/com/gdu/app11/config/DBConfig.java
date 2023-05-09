@@ -28,7 +28,6 @@ public class DBConfig {
 	@Autowired
 	private Environment env;
 	
-	
 	// DB 접속에 관련된 Bean들 
 	// HikariConfig Bean (application.properties 내용 옮기는 것. 프로퍼티 분리했던 이유는 gitignore에 application.properties를 처리해서 깃에는 안 올라가게 처리하기 위함) 
 	@Bean

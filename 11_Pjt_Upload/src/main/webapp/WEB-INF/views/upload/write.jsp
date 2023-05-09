@@ -55,6 +55,7 @@
 			<div>
 				<label for="files">첨부</label>
 				<!-- 멀티플을 넣으면 다중첨부가 된다. 빼면 단일첨부가 된다.  -->
+				<!-- 일반 리퀘스트로는 처리 못함. 멀티파트리퀘스트를 사용해야한다. -->
 				<input type="file" id="files" name="files" multiple="multiple" onchange="fnFileCheck(this)">
 				<div id="fileList">첨부파일의 목록이 이곳에 표시됩니다</div>
 			</div>
