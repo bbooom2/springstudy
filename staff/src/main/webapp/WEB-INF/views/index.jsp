@@ -1,27 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>  <!-- 이걸 제일 위에 두고 나머지 아래 배치 -->
+<script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 	
 	$(function(){
 		fnList();
 	})
 	
-	function fnList(){
+	function fnList() {
 		$.ajax({
 			type: 'get',
 			url: '${contextPath}/list.json',
 			dataType: 'json',
-			success: function(resData) {
+			success: function(resData){	
 				$('#staffList').empty();
 				$.each(resData, function(i, staff){
 					let str = '<tr>';
@@ -34,36 +34,58 @@
 			}
 		})
 	}
-	function fnAdd(){
+	
+	function fnAdd() {
 		$.ajax({
 			type: 'post',
 			url: '${contextPath}/add.do',
-			data: $('#frm_add').serialize(),
+			data: $('#frm_add').serialize(), 
 			dataType: 'text',
-			success: function(resData){ 
+			success: function(resData){
 				alert(resData);
-				fnList();
-				$('#sno').val('');
-				$('#name').val('');
-				$('#dept').val('');
+				fnList();	
+				$('#sno').val();	
+				$('#name').val();
+				$('#salary').val();
+				
 			},
-			error: function(jqXHR){
+			error: function(jqXHR){  
 				alert(jqXHR.responseText);
 			}
-			
 		})
 	}
+	
+	function fnSearch() {
+		$.ajax({
+			type: 'get',
+			url: '${contextPath}/query.json',
+			data: $('#frm_search').serialize(),
+			
+			dataType='json',
+			success : function(){
+				alert(resData);
+				$('#sno').val();	
+				$('#name').val();
+				$('#salary').val();
+				},
+				error: function(jqXHR){  
+					alert(jqXHR.responseText);
+				}
+		})
+	}
+	
+
 </script>
 </head>
 <body>
-	
+
 	<div>
 		<h3>사원등록</h3>
 		<form id="frm_add">
-			<input type="text" name="sno" id="sno" placeholder="사원번호">		
-			<input type="text" name="name" id="name"  placeholder="사원명">		
-			<input type="text" name="dept" id="dept" placeholder="부서명">	
-			<input type="button" value="등록" onclick="fnAdd()">	
+			<input type="text" name="sno" id="sno" placeholder="사원번호">
+			<input type="text" name="name" id="name" placeholder="사원명">
+			<input type="text" name="dept" id="dept" placeholder="부서명">
+			<input type="button" value="등록" onclick="fnAdd()">
 		</form>
 	</div>
 	
@@ -78,6 +100,28 @@
 		</form>
 	</div>
 	
+      <div>
+        <h1>사원번호 검사하기</h1>
+        <input type="text" id="no">
+        <input type="button" value="검사" id="btn_no">
+    </div>
+    <script>
+   
+        var no = document.getElementById('no');
+        var btnId = document.getElementById('btn_no'); 
+  
+        btnNo.addEventListener('click', ()=>{
+
+            var regNo = /^[1-9]{0,4}$/;
+            if(regNo.test(id.value)) {
+                alert('');
+            }else {
+                alert('사원번호는 5자리 숫자입니다.');
+            }
+        })
+    </script>
+
+	
 	<hr>
 	
 	<div>
@@ -91,7 +135,11 @@
 					<td>연봉</td>
 				</tr>
 			</thead>
-			<tbody id="staffList"></tbody>
+			<tbody id="staffList">
+			
+			
+			
+			</tbody>
 		</table>
 	</div>
 	

@@ -8,7 +8,6 @@ import com.gdu.staff.domain.StaffDTO;
 
 @Mapper
 public interface StaffMapper {
-
 	public List<StaffDTO> getStaffList();
 	public int addStaff(StaffDTO staffDTO);
 }
