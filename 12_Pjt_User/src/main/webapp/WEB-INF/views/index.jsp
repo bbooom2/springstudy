@@ -14,7 +14,10 @@
 <body>
 
 	<div>
-	
+		<!-- 어떤 파일로 넘어갈 때는 .do 대신 .jsp를 그대로 기재한다. -->
+		<a href="${contextPath}/user/agree.jsp">회원가입</a>
+		<a href="${contextPath}/user/login.jsp">로그인</a>
+		
 	</div>
 	
 	
