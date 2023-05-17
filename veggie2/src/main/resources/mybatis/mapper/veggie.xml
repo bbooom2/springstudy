@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정 한다.-->
+<mapper namespace="com.gdu.semi.mapper.VeggieMapper">
+
+	<!-- Register 아이디 -->
+	<select id="getPersonById" parameterType="String" resultType="PersonDTO">
+		SELECT ID
+		  FROM PERSON
+		 WHERE ID = #{id}
+	</select>
+	<select id="getSleepPersonById" parameterType="String" resultType="SleepPersonDTO">
+		SELECT ID
+		  FROM SLEEP_PERSON
+		 WHERE ID = #{id}
+	</select>
+	<select id="getLeavePersonById" parameterType="String" resultType="LeavePersonDTO">
+		SELECT ID
+		  FROM LEAVE_PERSON
+		 WHERE ID = #{id}
+	</select>
+	
+	<!--  Register 이메일 -->
+	<select id="getPersonByEmail" parameterType="String" resultType="PersonDTO">
+		SELECT EMAIL
+		  FROM PERSON
+		 WHERE EMAIL = #{email}
+	</select>
+	<select id="getSleepPersonByEmail" parameterType="String" resultType="SleepPersonDTO">
+		SELECT EMAIL
+		  FROM SLEEP_PERSON
+		 WHERE EMAIL = #{email}
+	</select>
+	<select id="getLeavePersonByEmail" parameterType="String" resultType="LeavePersonDTO">
+		SELECT EMAIL
+		  FROM LEAVE_PERSON
+		 WHERE EMAIL = #{email}
+	</select>
+	
+	<!--  QNA -->
+	<select id="getQnaList" resultType="QnaDTO">
+		SELECT QNA_NO, QNA_TITLE, QNA_ID, QNA_DATE
+		  FROM QNA
+		 ORDER BY QNA_NO DESC
+	</select>
+	
+	<select id="getQnaByNo" parameterType="int" resultType="QnaDTO">
+		SELECT QNA_NO, TITLE, CONTENT, ID, WRITE_AT, QNA_REPLY
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+	</select>
+	
+	<insert id="insertQNA" parameterType="QnaDTO">
+		INSERT INTO QNA 
+			(QNA_NO, TITLE, CONTENT, ID, WRITE_AT)
+		VALUES 
+			(QNA_SEQ.NEXTVAL, #{title}, #{content}, #{id}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+	</insert>
+	
+	<update id="updateQNA" parameterType="QnaDTO">
+		UPDATE QNA
+		   SET TITLE = #{title}
+		   	 , CONTENT = #{content}
+		 WRITE QNA_NO = #{qnaNo}
+	</update>
+	
+	<delete id="deleteQNA" parameterType="int">
+		DELETE
+		  FROM QNA
+		 WHERE QNA_NO = #{qnaNo}
+	</delete>
+	
+	<!-- Sale -->
+
+	
+</mapper>
