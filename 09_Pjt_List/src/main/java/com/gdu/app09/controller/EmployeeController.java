@@ -55,7 +55,7 @@ public class EmployeeController {
 		}
 		
 		@ResponseBody  // 이 맵은 제이슨으로 만들어진 데이터다. 리스폰스데이터가 있어야 jsp가 아니라 ajax로 하는 데이터가 되는것.
-		@GetMapping(value="/employees/autoComplte.do", produces="application/json") 
+		@GetMapping(value="/employees/autoComplete.do", produces="application/json") 
 		public Map<String, Object> autoComplete(HttpServletRequest request) {
 			return employeeListService.getAutoComplete(request);
 		}

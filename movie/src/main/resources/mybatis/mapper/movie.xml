@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- 테이블 이름으로 mapper이름 명명  -->
+ 
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.movie.mapper.MovieMapper">  
+
+	<!-- 
+	
+	parameterType : DAO에서 mapper로 받아오는 값의 타입 
+	resultType 	  : mapper에서 DAO로 반환하는 값의 타입(insert, update, delete는 사용하지 못한다.)
+	
+  	-->
+  	<select id="getAllMovies" resultType="MovieDTO">
+  		SELECT NO, TITLE, GENRE, DESCRIPTION, STAR 
+  		  FROM MOVIE
+  	</select>
+  	
+  	
+  	<select id="getMoviesByQuery" parameterType="QueryDTO" resultType="MovieDTO">
+  		SELECT NO, TITLE, GENRE, DESCRIPTION, STAR 
+  		  FROM MOVIE
+  		 WHERE ${column} LIKE '%' || #{searchText} || '%'
+  		 
+  	</select>
+  	
+  
+</mapper>

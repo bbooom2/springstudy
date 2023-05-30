@@ -42,7 +42,7 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		HttpSession session = request.getSession();
 		Optional<Object> opt2 = Optional.ofNullable(session.getAttribute("recordPerPage")); // 세션에 올라갈 수 있는 타입은 정해져있음 - 오브젝트 
 		int recordPerPage = (int)(opt2.orElse(10));		
-		
+	
 		// 파라미터 order가 전달되지 않는 경우 order=ASC로 처리한다. 
 		Optional<String> opt3 = Optional.ofNullable(request.getParameter("order"));
 		String order = opt3.orElse("ASC"); // 첫 화면일때는 안옴. 페이징첫화면처럼 order값 없음. 항상 오는 게 아님. 아무것도 안온거에 대해서는 우리가 정하면 되는데 우리는 첫 기본정렬을 오름차순으로 진행 
